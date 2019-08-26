@@ -48,8 +48,9 @@ const resolvers = {
     },
     Mutation: {
         signup: async (_, args, context, info) => {
+            const temporaryPassword = Math.floor(Math.random()*1000 + 1000);
             const password = await bcrypt
-                .hash(args.phone+args.address, 10);
+                .hash(temporaryPassword, 10);
             const user = await context.db.mutation.createUser(
                 {
                     data: {
