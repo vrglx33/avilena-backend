@@ -1,105 +1,26 @@
 type User {
-    id: ID! @unique @id
+    id: ID! @id
     username: String!
     email: String!
-    aidName: String!
     phone: String!
     address: String!
-    birthDate: String!
     password: String!
     updatedAt: DateTime! @updatedAt
     createdAt: DateTime! @createdAt
 }
 
-type Forum {
-    id: ID! @unique @id
-    text: String
-    title: String
-    user: User!
-    comments: [Comment!]! @relation(name: "ForumComments")
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
-}
-
-type Comment {
-    id: ID! @unique @id
-    text: String
-    forum: Forum! @relation(name: "ForumComments")
-    user: User!
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
-}
-
-type CognitiveTestQuestion {
-    id: ID! @unique @id
-    question:String!
-    active: Boolean!
-    type: QuestionType @relation(name:"QuestionType")
-    responses: [Response!]! @relation(name: "QuestionResponses")
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
-}
-
-type Response {
-    id: ID! @unique @id
-    question: CognitiveTestQuestion! @relation(name: "QuestionResponses")
-    correct: Boolean!
-    text:String!
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
-}
-
-type UserResponse {
-    id: ID! @unique @id
-    question: CognitiveTestQuestion!
-    response: Response!
-    User: User!
-    CognitiveTest: CognitiveTest!
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
-}
-
-type CognitiveTest{
-    id: ID! @unique @id
-    questions: [CognitiveTestQuestion!]!
-    responses: [UserResponse!]!
-    User: User!
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
-}
-
-type QuestionType{
-    id: ID! @unique @id
-    type: String!
-    questions: [CognitiveTestQuestion!]! @relation(name:"QuestionType")
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
-}
-
-type UserDiagnosis{
-    id: ID! @unique @id
-    User: User!
-    CognitiveResult: Float!
-    SelfEsteemResult: Float!
-    OptimismResult: Float!
-    Permutation: Permutation!
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
-}
-
-type VideoMusic{
-    id: ID! @unique @id
-    url: String!
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
-}
-
-type Permutation{
-    id: ID! @unique @id
+type Product{
+    id: ID! @id
     name: String!
-    number: Int!
-    updatedAt: DateTime! @updatedAt
-    createdAt: DateTime! @createdAt
+    size: String!
+    type: ProductType! @relation(name:"ProductType")
+    fileName: String!
+}
+
+type ProductType{
+    id: ID! @id
+    name: String!
+    products: [Product!]! @relation(name:"ProductType")
 }
 
 type News{

@@ -1,4 +1,4 @@
-endpoint: https://eu1.prisma.sh/alejox31-67c020/prisma-demo/dev
+endpoint: https://us1.prisma.sh/alejox31-67c020/avilena/avilena-stgf
 datamodel: prisma/datamodel.graphql
 secret: mysecret123
 hooks:

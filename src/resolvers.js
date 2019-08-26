@@ -3,12 +3,11 @@ import {getUser} from "./helpers";
 const bcrypt  = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const asyncForeEach = async(array, callback) =>{
+const asyncForeEach = async(array, callback) => {
     for (let index = 0; index < (array.length > 7 ? 7:array.length); index++) {
         await callback(array[index], index, array);
     }
 };
-
 
 const resolvers = {
     Query: {
@@ -50,20 +49,18 @@ const resolvers = {
     Mutation: {
         signup: async (_, args, context, info) => {
             const password = await bcrypt
-                .hash(args.password, 10);
+                .hash(args.phone+args.address, 10);
             const user = await context.db.mutation.createUser(
                 {
                     data: {
                         username: args.username,
                         email: args.email,
-                        aidName: args.aidName,
                         phone:args.phone,
                         address:args.address,
-                        birthDate:args.birthDate,
                         password,
                     },
                 });
-            const authorization = await jwt.sign(user, "secret123", {expiresIn:"3m"});
+            const authorization = await jwt.sign(user, "secret123", {expiresIn:"30m"});
             return { authorization, user }
         },
     },

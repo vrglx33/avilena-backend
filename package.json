@@ -1,15 +1,20 @@
 {
   "name": "prisma-subscriptions",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "yarn generate-build && node -r esm src/index.js",
     "playground": "graphql playground",
     "dev": "npm-run-all --parallel start playground",
     "prisma": "prisma",
-    "generate-build": "node src/generateSchema.js && git add ."
+    "generate-build": "node -r esm src/generateSchema.js && git add ."
   },
   "dependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "babel-preset-env": "^1.7.0",
     "bcrypt": "^3.0.3",
     "dotenv": "^6.2.0",
+    "esm": "^3.2.25",
     "express-jwt": "^5.3.1",
     "global": "^4.3.2",
     "graphql-import": "^0.7.1",

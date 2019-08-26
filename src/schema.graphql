@@ -4,6 +4,7 @@ type Token {
     authorization: String!,
     user: User!
 }
+
 type Result {
     sum:Float!
     createdAt:String!
@@ -13,40 +14,16 @@ type Query {
     getUser(id: ID!): User
     login(email: String!, password: String!): Token!
     currentUser(token: String): User
-    getForumList(text: String): [Forum!]!
-    getForum(id: ID!): Forum!
-    getCognitiveTest(id:ID!, type:String!, len:Int!):CognitiveTest!
-    getQuestions:[CognitiveTestQuestion!]!
-    getTestByUser(User:ID!):Int!
-    checkTestCompletion(User:ID!, CognitiveTest:ID!, len:Int!):Boolean!
-    getMusicVideo:String!
     getNews:News!
-    getOptimismResults(User:ID!):[Result!]!
-    getSelfEsteemResults(User:ID!):[Result!]!
-    getCognitiveResults(User:ID!):[Result!]!
-    generateDataResultsByUser(User:ID!):String!
-    getOptResults(User:ID!):Float!
-    getSEResults(User:ID!):Float!
-    getCgResults(User:ID!):Float!
-    getAllTests(User:ID!):Float!
-    trainFirstData:Boolean!
-    generateDataByResults(User:ID!,cognitiveResult:Float!,selfEsteemResult:Float!,optimismResult:Float!):String!
 }
 
 type Mutation {
-  signup(username:String!, email: String!, password: String!,aidName: String!,phone: String!, address: String!, birthDate: String!): Token!
-  addForum(text:String!, title:String!, user: ID!): Forum!
-  addComment(text:String!, forum:ID!, user: ID!): Comment!
-  addVideo(url:String!): VideoMusic!
-  addResponse(text:String!, correct:Boolean!, question: ID!): Response!
-  addUserResponse(question:ID!, response:ID!,  User:ID!, CognitiveTest:ID!): UserResponse!
-  removeUserResponse(question:ID!, User:ID!, CognitiveTest:ID!): BatchPayload!
+  signup(username:String!, email: String!,phone: String!, address: String!): Token!
 }
 
 input UserInput {
     username: String!
     email: String!
-    aidName: String!
     phone: String!
     address: String!
     birthDate: String!
