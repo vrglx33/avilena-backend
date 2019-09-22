@@ -11,35 +11,35 @@ const asyncForeEach = async(array, callback) => {
 
 const resolvers = {
     Query: {
-        getUser: (_, args, context, info) => {
-            return context.db.query.user(
+        getUser: (parent, { id }, {context}) => {
+            return context.prisma.user(
                 {
                     where: {
                         id: args.id,
                     },
                 },
-                info,
             )
         },
-        getNews:async (_, args, context, info) => {
-            const news = await context.db.query.newses({});
-            return news[Math.floor(Math.random() * news.length)];
+        getProductType:async (parent, { id }, {context}) => {
+            return await context.prisma.productTypes();
         },
-        currentUser: (_, args, context, info) => {
+        getCategoryProducts: async (parent, { id }, {context}) => {
+            return await context.prisma.productType({id}).products();
+        },
+        currentUser: (parent, { email,password }, context) => {
             return getUser(context);
         },
-        login: async (_, args, ctx ,info) => {
-            const users = await ctx.db.query.users({where: {email: args.email}});
-            const user = users.pop();
+        login: async (parent, { email,password }, {context}) => {
+            const user = await context.user({email});
             if (!user) {
-                throw new Error(`No such user found for email: ${args.email}`)
+                throw new Error(`No such user found for email: ${email}`)
             }
-            const valid = await bcrypt.compare(args.password, user.password);
+            const valid = await bcrypt.compare(password, password);
             if (!valid)  {
                 throw new Error('Invalid password')
             }
             delete user.password;
-            const authorization = await jwt.sign(user, "secret123", {expiresIn: "3m"});
+            const authorization = await jwt.sign(user, "secret123");
             return {
                 authorization,
                 user,
@@ -47,21 +47,20 @@ const resolvers = {
         },
     },
     Mutation: {
-        signup: async (_, args, context, info) => {
-            const temporaryPassword = Math.floor(Math.random()*1000 + 1000);
+        signup: async (parent, { email, username, phone, address }, {context}) => {
+            const temporaryPassword = Math.floor(Math.random()*1000 + 1000).toString();
+            console.log(temporaryPassword);
             const password = await bcrypt
                 .hash(temporaryPassword, 10);
-            const user = await context.db.mutation.createUser(
+            const user = await context.prisma.createUser(
                 {
-                    data: {
-                        username: args.username,
-                        email: args.email,
-                        phone:args.phone,
-                        address:args.address,
-                        password,
-                    },
+                    username,
+                    email,
+                    phone,
+                    address,
+                    password,
                 });
-            const authorization = await jwt.sign(user, "secret123", {expiresIn:"30m"});
+            const authorization = await jwt.sign(user, "secret123");
             return { authorization, user }
         },
     },

@@ -1,5 +1,3 @@
-# import User from './generated/prisma.graphql'
-
 type Token {
     authorization: String!,
     user: User!
@@ -12,9 +10,10 @@ type Result {
 
 type Query {
     getUser(id: ID!): User
+    getCategoryProducts(id: ID!): [Product]
     login(email: String!, password: String!): Token!
     currentUser(token: String): User
-    getNews:News!
+    getProductType:[ProductType]
 }
 
 type Mutation {
@@ -28,4 +27,36 @@ input UserInput {
     address: String!
     birthDate: String!
     password: String!
+}
+
+type User {
+    id: ID!
+    username: String!
+    email: String!
+    phone: String!
+    address: String!
+    password: String!
+    updatedAt: String!
+    createdAt: String!
+}
+type Product{
+    id: ID!
+    name: String!
+    size: String!
+    type: ProductType!
+    fileName: String!
+}
+
+type ProductType{
+    id: ID!
+    name: String!
+    imageLink: String
+    products: [Product]
+}
+
+type News{
+    id: ID!
+    title:String!
+    text:String!
+    image:String!
 }

@@ -5,7 +5,5 @@ hooks:
   post-deploy:
   - prisma generate
 generate:
-  - generator: graphql-schema
-    output: ./src/generated/
   - generator: javascript-client
-    output: ../src/generated/prisma-js
+    output: ./src/generated/
