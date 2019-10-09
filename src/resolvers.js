@@ -49,7 +49,9 @@ const resolvers = {
     Mutation: {
         signup: async (parent, { email, username, phone, address }, {context}) => {
             const temporaryPassword = Math.floor(Math.random()*1000 + 1000).toString();
+
             console.log(temporaryPassword);
+
             const password = await bcrypt
                 .hash(temporaryPassword, 10);
             const user = await context.prisma.createUser(
