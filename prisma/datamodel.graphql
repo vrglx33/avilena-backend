@@ -42,6 +42,7 @@ type ProductOrder{
 
 type Order{
     id: ID! @id
+    status: String!
     products: [ProductOrder!]! @relation(name:"ProductOrderRel")
     user: User!
     updatedAt: DateTime! @updatedAt

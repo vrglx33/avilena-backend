@@ -18,6 +18,7 @@ type Query {
 
 type Mutation {
   signup(username:String!, email: String!,phone: String!, address: String!): Token!
+  createOrder(status:String, products:[ProductOrdersInput] ,user:ID!):Order!
 }
 
 input UserInput {
@@ -59,4 +60,27 @@ type News{
     title:String!
     text:String!
     image:String!
+}
+
+type ProductOrder{
+    id: ID!
+    name: String!
+    product: ID!
+    orders: [Order]
+    qty: Int!
+}
+
+input ProductOrdersInput{
+    name: String!
+    product: ID!
+    qty: Int!
+}
+
+type Order{
+    id: ID!
+    status: String!
+    products: [ProductOrder!]!
+    user: User!
+    updatedAt: String!
+    createdAt: String!
 }

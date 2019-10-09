@@ -65,6 +65,21 @@ const resolvers = {
             const authorization = await jwt.sign(user, "secret123");
             return { authorization, user }
         },
+        createOrder: async (parent, { status, products, user }, {context}) => {
+            const formattedProducts = products.map((product) => {
+                product.product = {connect:{id:product.product}};
+                return product;
+            });
+            return await context.prisma.createOrder({
+                status,
+                products: {
+                    create: formattedProducts
+                },
+                user: {
+                    connect: {id: user}
+                }
+            });
+        }
     },
 };
 

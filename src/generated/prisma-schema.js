@@ -44,6 +44,7 @@ type Mutation {
   deleteManyNewses(where: NewsWhereInput): BatchPayload!
   createOrder(data: OrderCreateInput!): Order!
   updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
+  updateManyOrders(data: OrderUpdateManyMutationInput!, where: OrderWhereInput): BatchPayload!
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
   deleteOrder(where: OrderWhereUniqueInput!): Order
   deleteManyOrders(where: OrderWhereInput): BatchPayload!
@@ -224,6 +225,7 @@ interface Node {
 
 type Order {
   id: ID!
+  status: String!
   products(where: ProductOrderWhereInput, orderBy: ProductOrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProductOrder!]
   user: User!
   updatedAt: DateTime!
@@ -238,6 +240,7 @@ type OrderConnection {
 
 input OrderCreateInput {
   id: ID
+  status: String!
   products: ProductOrderCreateManyWithoutOrdersInput
   user: UserCreateOneInput!
 }
@@ -249,6 +252,7 @@ input OrderCreateManyWithoutProductsInput {
 
 input OrderCreateWithoutProductsInput {
   id: ID
+  status: String!
   user: UserCreateOneInput!
 }
 
@@ -260,6 +264,8 @@ type OrderEdge {
 enum OrderOrderByInput {
   id_ASC
   id_DESC
+  status_ASC
+  status_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -268,6 +274,7 @@ enum OrderOrderByInput {
 
 type OrderPreviousValues {
   id: ID!
+  status: String!
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -287,6 +294,20 @@ input OrderScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -327,8 +348,17 @@ input OrderSubscriptionWhereInput {
 }
 
 input OrderUpdateInput {
+  status: String
   products: ProductOrderUpdateManyWithoutOrdersInput
   user: UserUpdateOneRequiredInput
+}
+
+input OrderUpdateManyDataInput {
+  status: String
+}
+
+input OrderUpdateManyMutationInput {
+  status: String
 }
 
 input OrderUpdateManyWithoutProductsInput {
@@ -340,9 +370,16 @@ input OrderUpdateManyWithoutProductsInput {
   update: [OrderUpdateWithWhereUniqueWithoutProductsInput!]
   upsert: [OrderUpsertWithWhereUniqueWithoutProductsInput!]
   deleteMany: [OrderScalarWhereInput!]
+  updateMany: [OrderUpdateManyWithWhereNestedInput!]
+}
+
+input OrderUpdateManyWithWhereNestedInput {
+  where: OrderScalarWhereInput!
+  data: OrderUpdateManyDataInput!
 }
 
 input OrderUpdateWithoutProductsDataInput {
+  status: String
   user: UserUpdateOneRequiredInput
 }
 
@@ -372,6 +409,20 @@ input OrderWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  status: String
+  status_not: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_gt: String
+  status_gte: String
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
   products_every: ProductOrderWhereInput
   products_some: ProductOrderWhereInput
   products_none: ProductOrderWhereInput

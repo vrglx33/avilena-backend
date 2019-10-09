@@ -188,6 +188,10 @@ export interface Prisma {
     data: OrderUpdateInput;
     where: OrderWhereUniqueInput;
   }) => OrderPromise;
+  updateManyOrders: (args: {
+    data: OrderUpdateManyMutationInput;
+    where?: OrderWhereInput;
+  }) => BatchPayloadPromise;
   upsertOrder: (args: {
     where: OrderWhereUniqueInput;
     create: OrderCreateInput;
@@ -323,6 +327,8 @@ export type ProductOrderByInput =
 export type OrderOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "status_ASC"
+  | "status_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC"
   | "createdAt_ASC"
@@ -366,39 +372,16 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface ProductOrderUpdateWithoutOrdersDataInput {
-  name?: Maybe<String>;
-  product?: Maybe<ProductUpdateOneRequiredWithoutProductOrdersInput>;
-  qty?: Maybe<Int>;
+export interface ProductUpdateOneRequiredWithoutProductOrdersInput {
+  create?: Maybe<ProductCreateWithoutProductOrdersInput>;
+  update?: Maybe<ProductUpdateWithoutProductOrdersDataInput>;
+  upsert?: Maybe<ProductUpsertWithoutProductOrdersInput>;
+  connect?: Maybe<ProductWhereUniqueInput>;
 }
 
 export type NewsWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
-
-export interface NewsCreateInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  text: String;
-  image: String;
-}
-
-export interface ProductOrderUpdateWithoutProductDataInput {
-  name?: Maybe<String>;
-  orders?: Maybe<OrderUpdateManyWithoutProductsInput>;
-  qty?: Maybe<Int>;
-}
-
-export interface NewsUpdateInput {
-  title?: Maybe<String>;
-  text?: Maybe<String>;
-  image?: Maybe<String>;
-}
-
-export interface ProductTypeUpdateWithoutProductsDataInput {
-  name?: Maybe<String>;
-  imageLink?: Maybe<String>;
-}
 
 export interface NewsUpdateManyMutationInput {
   title?: Maybe<String>;
@@ -406,14 +389,80 @@ export interface NewsUpdateManyMutationInput {
   image?: Maybe<String>;
 }
 
+export interface OrderUpdateWithWhereUniqueWithoutProductsInput {
+  where: OrderWhereUniqueInput;
+  data: OrderUpdateWithoutProductsDataInput;
+}
+
+export interface OrderUpdateManyWithWhereNestedInput {
+  where: OrderScalarWhereInput;
+  data: OrderUpdateManyDataInput;
+}
+
+export interface ProductUpsertWithoutProductOrdersInput {
+  update: ProductUpdateWithoutProductOrdersDataInput;
+  create: ProductCreateWithoutProductOrdersInput;
+}
+
+export interface OrderScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  status?: Maybe<String>;
+  status_not?: Maybe<String>;
+  status_in?: Maybe<String[] | String>;
+  status_not_in?: Maybe<String[] | String>;
+  status_lt?: Maybe<String>;
+  status_lte?: Maybe<String>;
+  status_gt?: Maybe<String>;
+  status_gte?: Maybe<String>;
+  status_contains?: Maybe<String>;
+  status_not_contains?: Maybe<String>;
+  status_starts_with?: Maybe<String>;
+  status_not_starts_with?: Maybe<String>;
+  status_ends_with?: Maybe<String>;
+  status_not_ends_with?: Maybe<String>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<OrderScalarWhereInput[] | OrderScalarWhereInput>;
+  OR?: Maybe<OrderScalarWhereInput[] | OrderScalarWhereInput>;
+  NOT?: Maybe<OrderScalarWhereInput[] | OrderScalarWhereInput>;
+}
+
 export type OrderWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface OrderUpsertWithWhereUniqueWithoutProductsInput {
-  where: OrderWhereUniqueInput;
-  update: OrderUpdateWithoutProductsDataInput;
-  create: OrderCreateWithoutProductsInput;
+export interface OrderCreateInput {
+  id?: Maybe<ID_Input>;
+  status: String;
+  products?: Maybe<ProductOrderCreateManyWithoutOrdersInput>;
+  user: UserCreateOneInput;
 }
 
 export interface ProductOrderWhereInput {
@@ -462,8 +511,14 @@ export interface ProductOrderWhereInput {
   NOT?: Maybe<ProductOrderWhereInput[] | ProductOrderWhereInput>;
 }
 
-export interface OrderUpdateWithoutProductsDataInput {
-  user?: Maybe<UserUpdateOneRequiredInput>;
+export interface ProductOrderCreateManyWithoutOrdersInput {
+  create?: Maybe<
+    | ProductOrderCreateWithoutOrdersInput[]
+    | ProductOrderCreateWithoutOrdersInput
+  >;
+  connect?: Maybe<
+    ProductOrderWhereUniqueInput[] | ProductOrderWhereUniqueInput
+  >;
 }
 
 export interface ProductTypeWhereInput {
@@ -517,10 +572,11 @@ export interface ProductTypeWhereInput {
   NOT?: Maybe<ProductTypeWhereInput[] | ProductTypeWhereInput>;
 }
 
-export interface OrderCreateInput {
+export interface ProductOrderCreateWithoutOrdersInput {
   id?: Maybe<ID_Input>;
-  products?: Maybe<ProductOrderCreateManyWithoutOrdersInput>;
-  user: UserCreateOneInput;
+  name: String;
+  product: ProductCreateOneWithoutProductOrdersInput;
+  qty: Int;
 }
 
 export interface UserWhereInput {
@@ -629,14 +685,9 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface ProductOrderCreateManyWithoutOrdersInput {
-  create?: Maybe<
-    | ProductOrderCreateWithoutOrdersInput[]
-    | ProductOrderCreateWithoutOrdersInput
-  >;
-  connect?: Maybe<
-    ProductOrderWhereUniqueInput[] | ProductOrderWhereUniqueInput
-  >;
+export interface ProductCreateOneWithoutProductOrdersInput {
+  create?: Maybe<ProductCreateWithoutProductOrdersInput>;
+  connect?: Maybe<ProductWhereUniqueInput>;
 }
 
 export interface ProductSubscriptionWhereInput {
@@ -650,11 +701,12 @@ export interface ProductSubscriptionWhereInput {
   NOT?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
 }
 
-export interface ProductOrderCreateWithoutOrdersInput {
+export interface ProductCreateWithoutProductOrdersInput {
   id?: Maybe<ID_Input>;
   name: String;
-  product: ProductCreateOneWithoutProductOrdersInput;
-  qty: Int;
+  size: String;
+  type: ProductTypeCreateOneWithoutProductsInput;
+  fileName: String;
 }
 
 export interface NewsSubscriptionWhereInput {
@@ -668,9 +720,9 @@ export interface NewsSubscriptionWhereInput {
   NOT?: Maybe<NewsSubscriptionWhereInput[] | NewsSubscriptionWhereInput>;
 }
 
-export interface ProductCreateOneWithoutProductOrdersInput {
-  create?: Maybe<ProductCreateWithoutProductOrdersInput>;
-  connect?: Maybe<ProductWhereUniqueInput>;
+export interface ProductTypeCreateOneWithoutProductsInput {
+  create?: Maybe<ProductTypeCreateWithoutProductsInput>;
+  connect?: Maybe<ProductTypeWhereUniqueInput>;
 }
 
 export interface UserUpdateInput {
@@ -681,12 +733,10 @@ export interface UserUpdateInput {
   password?: Maybe<String>;
 }
 
-export interface ProductCreateWithoutProductOrdersInput {
+export interface ProductTypeCreateWithoutProductsInput {
   id?: Maybe<ID_Input>;
   name: String;
-  size: String;
-  type: ProductTypeCreateOneWithoutProductsInput;
-  fileName: String;
+  imageLink?: Maybe<String>;
 }
 
 export interface ProductUpdateManyDataInput {
@@ -695,9 +745,9 @@ export interface ProductUpdateManyDataInput {
   fileName?: Maybe<String>;
 }
 
-export interface ProductTypeCreateOneWithoutProductsInput {
-  create?: Maybe<ProductTypeCreateWithoutProductsInput>;
-  connect?: Maybe<ProductTypeWhereUniqueInput>;
+export interface UserCreateOneInput {
+  create?: Maybe<UserCreateInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface ProductScalarWhereInput {
@@ -762,26 +812,6 @@ export interface ProductScalarWhereInput {
   NOT?: Maybe<ProductScalarWhereInput[] | ProductScalarWhereInput>;
 }
 
-export interface ProductTypeCreateWithoutProductsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  imageLink?: Maybe<String>;
-}
-
-export type ProductWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface UserCreateOneInput {
-  create?: Maybe<UserCreateInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface ProductUpdateWithWhereUniqueWithoutTypeInput {
-  where: ProductWhereUniqueInput;
-  data: ProductUpdateWithoutTypeDataInput;
-}
-
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   username: String;
@@ -791,21 +821,19 @@ export interface UserCreateInput {
   password: String;
 }
 
-export type ProductOrderWhereUniqueInput = AtLeastOne<{
+export type ProductWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
 export interface OrderUpdateInput {
+  status?: Maybe<String>;
   products?: Maybe<ProductOrderUpdateManyWithoutOrdersInput>;
   user?: Maybe<UserUpdateOneRequiredInput>;
 }
 
-export interface ProductCreateWithoutTypeInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  size: String;
-  productOrders?: Maybe<ProductOrderCreateManyWithoutProductInput>;
-  fileName: String;
+export interface ProductUpdateWithWhereUniqueWithoutTypeInput {
+  where: ProductWhereUniqueInput;
+  data: ProductUpdateWithoutTypeDataInput;
 }
 
 export interface ProductOrderUpdateManyWithoutOrdersInput {
@@ -838,13 +866,37 @@ export interface ProductOrderUpdateManyWithoutOrdersInput {
   >;
 }
 
-export type ProductTypeWhereUniqueInput = AtLeastOne<{
+export type ProductOrderWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
 export interface ProductOrderUpdateWithWhereUniqueWithoutOrdersInput {
   where: ProductOrderWhereUniqueInput;
   data: ProductOrderUpdateWithoutOrdersDataInput;
+}
+
+export interface ProductCreateWithoutTypeInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  size: String;
+  productOrders?: Maybe<ProductOrderCreateManyWithoutProductInput>;
+  fileName: String;
+}
+
+export interface ProductOrderUpdateWithoutOrdersDataInput {
+  name?: Maybe<String>;
+  product?: Maybe<ProductUpdateOneRequiredWithoutProductOrdersInput>;
+  qty?: Maybe<Int>;
+}
+
+export type ProductTypeWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface OrderUpsertWithWhereUniqueWithoutProductsInput {
+  where: OrderWhereUniqueInput;
+  update: OrderUpdateWithoutProductsDataInput;
+  create: OrderCreateWithoutProductsInput;
 }
 
 export interface ProductTypeCreateInput {
@@ -854,9 +906,11 @@ export interface ProductTypeCreateInput {
   products?: Maybe<ProductCreateManyWithoutTypeInput>;
 }
 
-export interface OrderUpdateWithWhereUniqueWithoutProductsInput {
-  where: OrderWhereUniqueInput;
-  data: OrderUpdateWithoutProductsDataInput;
+export interface ProductUpdateWithoutProductOrdersDataInput {
+  name?: Maybe<String>;
+  size?: Maybe<String>;
+  type?: Maybe<ProductTypeUpdateOneRequiredWithoutProductsInput>;
+  fileName?: Maybe<String>;
 }
 
 export interface ProductOrderUpdateInput {
@@ -866,11 +920,11 @@ export interface ProductOrderUpdateInput {
   qty?: Maybe<Int>;
 }
 
-export interface ProductUpdateOneRequiredWithoutProductOrdersInput {
-  create?: Maybe<ProductCreateWithoutProductOrdersInput>;
-  update?: Maybe<ProductUpdateWithoutProductOrdersDataInput>;
-  upsert?: Maybe<ProductUpsertWithoutProductOrdersInput>;
-  connect?: Maybe<ProductWhereUniqueInput>;
+export interface ProductTypeUpdateOneRequiredWithoutProductsInput {
+  create?: Maybe<ProductTypeCreateWithoutProductsInput>;
+  update?: Maybe<ProductTypeUpdateWithoutProductsDataInput>;
+  upsert?: Maybe<ProductTypeUpsertWithoutProductsInput>;
+  connect?: Maybe<ProductTypeWhereUniqueInput>;
 }
 
 export interface ProductOrderCreateInput {
@@ -881,11 +935,9 @@ export interface ProductOrderCreateInput {
   qty: Int;
 }
 
-export interface ProductUpdateWithoutProductOrdersDataInput {
+export interface ProductTypeUpdateWithoutProductsDataInput {
   name?: Maybe<String>;
-  size?: Maybe<String>;
-  type?: Maybe<ProductTypeUpdateOneRequiredWithoutProductsInput>;
-  fileName?: Maybe<String>;
+  imageLink?: Maybe<String>;
 }
 
 export interface ProductOrderUpsertWithWhereUniqueWithoutProductInput {
@@ -894,11 +946,20 @@ export interface ProductOrderUpsertWithWhereUniqueWithoutProductInput {
   create: ProductOrderCreateWithoutProductInput;
 }
 
-export interface ProductTypeUpdateOneRequiredWithoutProductsInput {
-  create?: Maybe<ProductTypeCreateWithoutProductsInput>;
-  update?: Maybe<ProductTypeUpdateWithoutProductsDataInput>;
-  upsert?: Maybe<ProductTypeUpsertWithoutProductsInput>;
-  connect?: Maybe<ProductTypeWhereUniqueInput>;
+export interface ProductTypeUpsertWithoutProductsInput {
+  update: ProductTypeUpdateWithoutProductsDataInput;
+  create: ProductTypeCreateWithoutProductsInput;
+}
+
+export interface NewsUpdateInput {
+  title?: Maybe<String>;
+  text?: Maybe<String>;
+  image?: Maybe<String>;
+}
+
+export interface OrderUpdateWithoutProductsDataInput {
+  status?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredInput>;
 }
 
 export interface ProductTypeSubscriptionWhereInput {
@@ -918,23 +979,10 @@ export interface ProductTypeSubscriptionWhereInput {
   >;
 }
 
-export interface OrderUpdateManyWithoutProductsInput {
-  create?: Maybe<
-    OrderCreateWithoutProductsInput[] | OrderCreateWithoutProductsInput
-  >;
-  delete?: Maybe<OrderWhereUniqueInput[] | OrderWhereUniqueInput>;
-  connect?: Maybe<OrderWhereUniqueInput[] | OrderWhereUniqueInput>;
-  set?: Maybe<OrderWhereUniqueInput[] | OrderWhereUniqueInput>;
-  disconnect?: Maybe<OrderWhereUniqueInput[] | OrderWhereUniqueInput>;
-  update?: Maybe<
-    | OrderUpdateWithWhereUniqueWithoutProductsInput[]
-    | OrderUpdateWithWhereUniqueWithoutProductsInput
-  >;
-  upsert?: Maybe<
-    | OrderUpsertWithWhereUniqueWithoutProductsInput[]
-    | OrderUpsertWithWhereUniqueWithoutProductsInput
-  >;
-  deleteMany?: Maybe<OrderScalarWhereInput[] | OrderScalarWhereInput>;
+export interface ProductOrderUpsertWithWhereUniqueWithoutOrdersInput {
+  where: ProductOrderWhereUniqueInput;
+  update: ProductOrderUpdateWithoutOrdersDataInput;
+  create: ProductOrderCreateWithoutOrdersInput;
 }
 
 export interface OrderWhereInput {
@@ -952,6 +1000,20 @@ export interface OrderWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  status?: Maybe<String>;
+  status_not?: Maybe<String>;
+  status_in?: Maybe<String[] | String>;
+  status_not_in?: Maybe<String[] | String>;
+  status_lt?: Maybe<String>;
+  status_lte?: Maybe<String>;
+  status_gt?: Maybe<String>;
+  status_gte?: Maybe<String>;
+  status_contains?: Maybe<String>;
+  status_not_contains?: Maybe<String>;
+  status_starts_with?: Maybe<String>;
+  status_not_starts_with?: Maybe<String>;
+  status_ends_with?: Maybe<String>;
+  status_not_ends_with?: Maybe<String>;
   products_every?: Maybe<ProductOrderWhereInput>;
   products_some?: Maybe<ProductOrderWhereInput>;
   products_none?: Maybe<ProductOrderWhereInput>;
@@ -975,44 +1037,6 @@ export interface OrderWhereInput {
   AND?: Maybe<OrderWhereInput[] | OrderWhereInput>;
   OR?: Maybe<OrderWhereInput[] | OrderWhereInput>;
   NOT?: Maybe<OrderWhereInput[] | OrderWhereInput>;
-}
-
-export interface ProductTypeUpsertWithoutProductsInput {
-  update: ProductTypeUpdateWithoutProductsDataInput;
-  create: ProductTypeCreateWithoutProductsInput;
-}
-
-export interface OrderSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<OrderWhereInput>;
-  AND?: Maybe<OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput>;
-  OR?: Maybe<OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput>;
-  NOT?: Maybe<OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput>;
-}
-
-export interface ProductUpsertWithoutProductOrdersInput {
-  update: ProductUpdateWithoutProductOrdersDataInput;
-  create: ProductCreateWithoutProductOrdersInput;
-}
-
-export interface ProductTypeUpdateManyMutationInput {
-  name?: Maybe<String>;
-  imageLink?: Maybe<String>;
-}
-
-export interface ProductOrderUpsertWithWhereUniqueWithoutOrdersInput {
-  where: ProductOrderWhereUniqueInput;
-  update: ProductOrderUpdateWithoutOrdersDataInput;
-  create: ProductOrderCreateWithoutOrdersInput;
-}
-
-export interface ProductUpsertWithWhereUniqueWithoutTypeInput {
-  where: ProductWhereUniqueInput;
-  update: ProductUpdateWithoutTypeDataInput;
-  create: ProductCreateWithoutTypeInput;
 }
 
 export interface ProductOrderScalarWhereInput {
@@ -1057,6 +1081,45 @@ export interface ProductOrderScalarWhereInput {
   NOT?: Maybe<ProductOrderScalarWhereInput[] | ProductOrderScalarWhereInput>;
 }
 
+export interface OrderSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<OrderWhereInput>;
+  AND?: Maybe<OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput>;
+  OR?: Maybe<OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput>;
+  NOT?: Maybe<OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput>;
+}
+
+export interface ProductOrderUpdateManyWithWhereNestedInput {
+  where: ProductOrderScalarWhereInput;
+  data: ProductOrderUpdateManyDataInput;
+}
+
+export interface ProductTypeUpdateManyMutationInput {
+  name?: Maybe<String>;
+  imageLink?: Maybe<String>;
+}
+
+export interface ProductOrderUpdateManyDataInput {
+  name?: Maybe<String>;
+  qty?: Maybe<Int>;
+}
+
+export interface ProductUpsertWithWhereUniqueWithoutTypeInput {
+  where: ProductWhereUniqueInput;
+  update: ProductUpdateWithoutTypeDataInput;
+  create: ProductCreateWithoutTypeInput;
+}
+
+export interface UserUpdateOneRequiredInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
 export interface ProductUpdateManyWithoutTypeInput {
   create?: Maybe<
     ProductCreateWithoutTypeInput[] | ProductCreateWithoutTypeInput
@@ -1080,9 +1143,12 @@ export interface ProductUpdateManyWithoutTypeInput {
   >;
 }
 
-export interface ProductOrderUpdateManyWithWhereNestedInput {
-  where: ProductOrderScalarWhereInput;
-  data: ProductOrderUpdateManyDataInput;
+export interface UserUpdateDataInput {
+  username?: Maybe<String>;
+  email?: Maybe<String>;
+  phone?: Maybe<String>;
+  address?: Maybe<String>;
+  password?: Maybe<String>;
 }
 
 export interface ProductCreateManyWithoutTypeInput {
@@ -1092,9 +1158,9 @@ export interface ProductCreateManyWithoutTypeInput {
   connect?: Maybe<ProductWhereUniqueInput[] | ProductWhereUniqueInput>;
 }
 
-export interface ProductOrderUpdateManyDataInput {
-  name?: Maybe<String>;
-  qty?: Maybe<Int>;
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
 }
 
 export interface ProductOrderUpdateManyMutationInput {
@@ -1102,58 +1168,14 @@ export interface ProductOrderUpdateManyMutationInput {
   qty?: Maybe<Int>;
 }
 
-export interface UserUpdateOneRequiredInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface OrderUpdateManyMutationInput {
+  status?: Maybe<String>;
 }
 
 export interface ProductUpdateManyMutationInput {
   name?: Maybe<String>;
   size?: Maybe<String>;
   fileName?: Maybe<String>;
-}
-
-export interface UserUpdateDataInput {
-  username?: Maybe<String>;
-  email?: Maybe<String>;
-  phone?: Maybe<String>;
-  address?: Maybe<String>;
-  password?: Maybe<String>;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface ProductOrderSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ProductOrderWhereInput>;
-  AND?: Maybe<
-    ProductOrderSubscriptionWhereInput[] | ProductOrderSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    ProductOrderSubscriptionWhereInput[] | ProductOrderSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    ProductOrderSubscriptionWhereInput[] | ProductOrderSubscriptionWhereInput
-  >;
 }
 
 export interface ProductCreateInput {
@@ -1165,9 +1187,11 @@ export interface ProductCreateInput {
   fileName: String;
 }
 
-export interface ProductUpdateManyWithWhereNestedInput {
-  where: ProductScalarWhereInput;
-  data: ProductUpdateManyDataInput;
+export interface NewsCreateInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  text: String;
+  image: String;
 }
 
 export interface ProductOrderCreateManyWithoutProductInput {
@@ -1178,30 +1202,6 @@ export interface ProductOrderCreateManyWithoutProductInput {
   connect?: Maybe<
     ProductOrderWhereUniqueInput[] | ProductOrderWhereUniqueInput
   >;
-}
-
-export interface ProductTypeUpdateInput {
-  name?: Maybe<String>;
-  imageLink?: Maybe<String>;
-  products?: Maybe<ProductUpdateManyWithoutTypeInput>;
-}
-
-export interface ProductOrderCreateWithoutProductInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  orders?: Maybe<OrderCreateManyWithoutProductsInput>;
-  qty: Int;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface OrderCreateManyWithoutProductsInput {
-  create?: Maybe<
-    OrderCreateWithoutProductsInput[] | OrderCreateWithoutProductsInput
-  >;
-  connect?: Maybe<OrderWhereUniqueInput[] | OrderWhereUniqueInput>;
 }
 
 export interface ProductWhereInput {
@@ -1270,52 +1270,11 @@ export interface ProductWhereInput {
   NOT?: Maybe<ProductWhereInput[] | ProductWhereInput>;
 }
 
-export interface ProductOrderUpdateWithWhereUniqueWithoutProductInput {
-  where: ProductOrderWhereUniqueInput;
-  data: ProductOrderUpdateWithoutProductDataInput;
-}
-
-export interface ProductOrderUpdateManyWithoutProductInput {
-  create?: Maybe<
-    | ProductOrderCreateWithoutProductInput[]
-    | ProductOrderCreateWithoutProductInput
-  >;
-  delete?: Maybe<ProductOrderWhereUniqueInput[] | ProductOrderWhereUniqueInput>;
-  connect?: Maybe<
-    ProductOrderWhereUniqueInput[] | ProductOrderWhereUniqueInput
-  >;
-  set?: Maybe<ProductOrderWhereUniqueInput[] | ProductOrderWhereUniqueInput>;
-  disconnect?: Maybe<
-    ProductOrderWhereUniqueInput[] | ProductOrderWhereUniqueInput
-  >;
-  update?: Maybe<
-    | ProductOrderUpdateWithWhereUniqueWithoutProductInput[]
-    | ProductOrderUpdateWithWhereUniqueWithoutProductInput
-  >;
-  upsert?: Maybe<
-    | ProductOrderUpsertWithWhereUniqueWithoutProductInput[]
-    | ProductOrderUpsertWithWhereUniqueWithoutProductInput
-  >;
-  deleteMany?: Maybe<
-    ProductOrderScalarWhereInput[] | ProductOrderScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | ProductOrderUpdateManyWithWhereNestedInput[]
-    | ProductOrderUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface ProductUpdateInput {
-  name?: Maybe<String>;
-  size?: Maybe<String>;
-  type?: Maybe<ProductTypeUpdateOneRequiredWithoutProductsInput>;
-  productOrders?: Maybe<ProductOrderUpdateManyWithoutProductInput>;
-  fileName?: Maybe<String>;
-}
-
-export interface OrderCreateWithoutProductsInput {
+export interface ProductOrderCreateWithoutProductInput {
   id?: Maybe<ID_Input>;
-  user: UserCreateOneInput;
+  name: String;
+  orders?: Maybe<OrderCreateManyWithoutProductsInput>;
+  qty: Int;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -1326,40 +1285,24 @@ export interface UserUpdateManyMutationInput {
   password?: Maybe<String>;
 }
 
-export interface OrderScalarWhereInput {
+export interface OrderCreateManyWithoutProductsInput {
+  create?: Maybe<
+    OrderCreateWithoutProductsInput[] | OrderCreateWithoutProductsInput
+  >;
+  connect?: Maybe<OrderWhereUniqueInput[] | OrderWhereUniqueInput>;
+}
+
+export interface ProductUpdateWithoutTypeDataInput {
+  name?: Maybe<String>;
+  size?: Maybe<String>;
+  productOrders?: Maybe<ProductOrderUpdateManyWithoutProductInput>;
+  fileName?: Maybe<String>;
+}
+
+export interface OrderCreateWithoutProductsInput {
   id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<OrderScalarWhereInput[] | OrderScalarWhereInput>;
-  OR?: Maybe<OrderScalarWhereInput[] | OrderScalarWhereInput>;
-  NOT?: Maybe<OrderScalarWhereInput[] | OrderScalarWhereInput>;
+  status: String;
+  user: UserCreateOneInput;
 }
 
 export interface NewsWhereInput {
@@ -1424,11 +1367,122 @@ export interface NewsWhereInput {
   NOT?: Maybe<NewsWhereInput[] | NewsWhereInput>;
 }
 
-export interface ProductUpdateWithoutTypeDataInput {
+export interface ProductUpdateInput {
   name?: Maybe<String>;
   size?: Maybe<String>;
+  type?: Maybe<ProductTypeUpdateOneRequiredWithoutProductsInput>;
   productOrders?: Maybe<ProductOrderUpdateManyWithoutProductInput>;
   fileName?: Maybe<String>;
+}
+
+export interface OrderUpdateManyDataInput {
+  status?: Maybe<String>;
+}
+
+export interface OrderUpdateManyWithoutProductsInput {
+  create?: Maybe<
+    OrderCreateWithoutProductsInput[] | OrderCreateWithoutProductsInput
+  >;
+  delete?: Maybe<OrderWhereUniqueInput[] | OrderWhereUniqueInput>;
+  connect?: Maybe<OrderWhereUniqueInput[] | OrderWhereUniqueInput>;
+  set?: Maybe<OrderWhereUniqueInput[] | OrderWhereUniqueInput>;
+  disconnect?: Maybe<OrderWhereUniqueInput[] | OrderWhereUniqueInput>;
+  update?: Maybe<
+    | OrderUpdateWithWhereUniqueWithoutProductsInput[]
+    | OrderUpdateWithWhereUniqueWithoutProductsInput
+  >;
+  upsert?: Maybe<
+    | OrderUpsertWithWhereUniqueWithoutProductsInput[]
+    | OrderUpsertWithWhereUniqueWithoutProductsInput
+  >;
+  deleteMany?: Maybe<OrderScalarWhereInput[] | OrderScalarWhereInput>;
+  updateMany?: Maybe<
+    OrderUpdateManyWithWhereNestedInput[] | OrderUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ProductOrderUpdateWithoutProductDataInput {
+  name?: Maybe<String>;
+  orders?: Maybe<OrderUpdateManyWithoutProductsInput>;
+  qty?: Maybe<Int>;
+}
+
+export interface ProductOrderUpdateWithWhereUniqueWithoutProductInput {
+  where: ProductOrderWhereUniqueInput;
+  data: ProductOrderUpdateWithoutProductDataInput;
+}
+
+export interface ProductOrderUpdateManyWithoutProductInput {
+  create?: Maybe<
+    | ProductOrderCreateWithoutProductInput[]
+    | ProductOrderCreateWithoutProductInput
+  >;
+  delete?: Maybe<ProductOrderWhereUniqueInput[] | ProductOrderWhereUniqueInput>;
+  connect?: Maybe<
+    ProductOrderWhereUniqueInput[] | ProductOrderWhereUniqueInput
+  >;
+  set?: Maybe<ProductOrderWhereUniqueInput[] | ProductOrderWhereUniqueInput>;
+  disconnect?: Maybe<
+    ProductOrderWhereUniqueInput[] | ProductOrderWhereUniqueInput
+  >;
+  update?: Maybe<
+    | ProductOrderUpdateWithWhereUniqueWithoutProductInput[]
+    | ProductOrderUpdateWithWhereUniqueWithoutProductInput
+  >;
+  upsert?: Maybe<
+    | ProductOrderUpsertWithWhereUniqueWithoutProductInput[]
+    | ProductOrderUpsertWithWhereUniqueWithoutProductInput
+  >;
+  deleteMany?: Maybe<
+    ProductOrderScalarWhereInput[] | ProductOrderScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | ProductOrderUpdateManyWithWhereNestedInput[]
+    | ProductOrderUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ProductTypeUpdateInput {
+  name?: Maybe<String>;
+  imageLink?: Maybe<String>;
+  products?: Maybe<ProductUpdateManyWithoutTypeInput>;
+}
+
+export interface ProductUpdateManyWithWhereNestedInput {
+  where: ProductScalarWhereInput;
+  data: ProductUpdateManyDataInput;
+}
+
+export interface ProductOrderSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ProductOrderWhereInput>;
+  AND?: Maybe<
+    ProductOrderSubscriptionWhereInput[] | ProductOrderSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    ProductOrderSubscriptionWhereInput[] | ProductOrderSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    ProductOrderSubscriptionWhereInput[] | ProductOrderSubscriptionWhereInput
+  >;
 }
 
 export interface NodeNode {
@@ -1495,12 +1549,14 @@ export interface OrderConnectionSubscription
 
 export interface Order {
   id: ID_Output;
+  status: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
 }
 
 export interface OrderPromise extends Promise<Order>, Fragmentable {
   id: () => Promise<ID_Output>;
+  status: () => Promise<String>;
   products: <T = FragmentableArray<ProductOrder>>(args?: {
     where?: ProductOrderWhereInput;
     orderBy?: ProductOrderOrderByInput;
@@ -1519,6 +1575,7 @@ export interface OrderSubscription
   extends Promise<AsyncIterator<Order>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  status: () => Promise<AsyncIterator<String>>;
   products: <T = Promise<AsyncIterator<ProductOrderSubscription>>>(args?: {
     where?: ProductOrderWhereInput;
     orderBy?: ProductOrderOrderByInput;
@@ -1537,6 +1594,7 @@ export interface OrderNullablePromise
   extends Promise<Order | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  status: () => Promise<String>;
   products: <T = FragmentableArray<ProductOrder>>(args?: {
     where?: ProductOrderWhereInput;
     orderBy?: ProductOrderOrderByInput;
@@ -2108,6 +2166,7 @@ export interface UserSubscriptionPayloadSubscription
 
 export interface OrderPreviousValues {
   id: ID_Output;
+  status: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
 }
@@ -2116,6 +2175,7 @@ export interface OrderPreviousValuesPromise
   extends Promise<OrderPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  status: () => Promise<String>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
 }
@@ -2124,6 +2184,7 @@ export interface OrderPreviousValuesSubscription
   extends Promise<AsyncIterator<OrderPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  status: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
