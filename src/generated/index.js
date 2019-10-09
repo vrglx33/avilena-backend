@@ -19,6 +19,14 @@ var models = [
   {
     name: "News",
     embedded: false
+  },
+  {
+    name: "ProductOrder",
+    embedded: false
+  },
+  {
+    name: "Order",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({

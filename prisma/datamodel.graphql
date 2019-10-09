@@ -14,6 +14,7 @@ type Product{
     name: String!
     size: String!
     type: ProductType! @relation(name:"ProductType")
+    productOrders:[ProductOrder!]! @relation(name:"ProductProductOrder")
     fileName: String!
 }
 
@@ -29,4 +30,20 @@ type News{
     title:String!
     text:String!
     image:String!
+}
+
+type ProductOrder{
+    id: ID! @id
+    name: String!
+    product: Product! @relation(name:"ProductProductOrder")
+    orders: [Order!]! @relation(name:"ProductOrderRel")
+    qty: Int!
+}
+
+type Order{
+    id: ID! @id
+    products: [ProductOrder!]! @relation(name:"ProductOrderRel")
+    user: User!
+    updatedAt: DateTime! @updatedAt
+    createdAt: DateTime! @createdAt
 }
