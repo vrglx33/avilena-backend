@@ -14,6 +14,8 @@ type Query {
     login(email: String!, password: String!): Token!
     currentUser(token: String): User
     getProductType:[ProductType]
+    getOrderDetails(id:ID!): Order
+    getOrders(user:ID!):[Order]
 }
 
 type Mutation {

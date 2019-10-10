@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8818c91e-4dd7-480d-ae69-d5ea54295fe3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/datamodel.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/datamodel.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/index.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma-schema.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma-schema.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/resolvers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/resolvers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/schema.graphql" afterDir="false" />
     </list>
@@ -28,8 +25,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/resolvers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="71" column="15" lean-forward="true" selection-start-line="71" selection-start-column="15" selection-end-line="71" selection-end-column="15" />
+            <state relative-caret-position="114">
+              <caret line="29" column="29" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -37,8 +34,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/schema.graphql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="64" column="18" lean-forward="true" selection-start-line="64" selection-start-column="18" selection-end-line="64" selection-end-column="18" />
+            <state relative-caret-position="240">
+              <caret line="16" column="34" lean-forward="true" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -84,8 +81,8 @@
         <option value="$PROJECT_DIR$/src/index.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/prisma/datamodel.graphql" />
-        <option value="$PROJECT_DIR$/src/schema.graphql" />
         <option value="$PROJECT_DIR$/src/resolvers.js" />
+        <option value="$PROJECT_DIR$/src/schema.graphql" />
       </list>
     </option>
   </component>
@@ -107,16 +104,6 @@
             <path>
               <item name="avilena-backend" type="b2602c69:ProjectViewProjectNode" />
               <item name="avilena-backend" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="avilena-backend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avilena-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="prisma" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="avilena-backend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="avilena-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -168,12 +155,12 @@
       <workItem from="1570380828360" duration="2682000" />
       <workItem from="1570498956539" duration="1823000" />
       <workItem from="1570587688565" duration="630000" />
-      <workItem from="1570591050479" duration="6105000" />
+      <workItem from="1570591050479" duration="7930000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="107709000" />
+    <option name="totallyTimeSpent" value="109534000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -188,7 +175,7 @@
     <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30402932" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30402932" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -203,7 +190,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32959184" />
       <window_info anchor="bottom" id="TypeScript" order="7" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.33061224" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.33061224" />
       <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
@@ -400,15 +387,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/generated/index.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="1251" column="15" selection-start-line="1251" selection-start-column="2" selection-end-line="1251" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/schema.graphql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="64" column="18" lean-forward="true" selection-start-line="64" selection-start-column="18" selection-end-line="64" selection-end-column="18" />
+        <state relative-caret-position="495">
+          <caret line="41" column="5" lean-forward="true" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -419,10 +399,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/schema.graphql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="34" lean-forward="true" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/resolvers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="71" column="15" lean-forward="true" selection-start-line="71" selection-start-column="15" selection-end-line="71" selection-end-column="15" />
+        <state relative-caret-position="114">
+          <caret line="29" column="29" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
         </state>
       </provider>
     </entry>

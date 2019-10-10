@@ -29,6 +29,12 @@ const resolvers = {
         currentUser: (parent, { email,password }, context) => {
             return getUser(context);
         },
+        getOrderDetails: async (parent, { id }, {context}) => {
+            return await context.prisma.order({ id:id })
+        },
+        getOrders: async (parent, { user }, {context}) => {
+            return await context.prisma.user({ id:user }).orders();
+        },
         login: async (parent, { email,password }, {context}) => {
             const user = await context.user({email});
             if (!user) {
@@ -49,9 +55,7 @@ const resolvers = {
     Mutation: {
         signup: async (parent, { email, username, phone, address }, {context}) => {
             const temporaryPassword = Math.floor(Math.random()*1000 + 1000).toString();
-
             console.log(temporaryPassword);
-
             const password = await bcrypt
                 .hash(temporaryPassword, 10);
             const user = await context.prisma.createUser(
