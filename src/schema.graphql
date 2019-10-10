@@ -14,7 +14,7 @@ type Query {
     login(email: String!, password: String!): Token!
     currentUser(token: String): User
     getProductType:[ProductType]
-    getOrderDetails(id:ID!): Order
+    getOrderDetails(id:ID!): [ProductType]
     getOrders(user:ID!):[Order]
 }
 
@@ -39,6 +39,7 @@ type User {
     phone: String!
     address: String!
     password: String!
+    Orders:[Order!]!
     updatedAt: String!
     createdAt: String!
 }
@@ -53,7 +54,7 @@ type Product{
 type ProductType{
     id: ID!
     name: String!
-    imageLink: String
+    qty: Int!
     products: [Product]
 }
 

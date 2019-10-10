@@ -242,7 +242,7 @@ input OrderCreateInput {
   id: ID
   status: String!
   products: ProductOrderCreateManyWithoutOrdersInput
-  user: UserCreateOneInput!
+  user: UserCreateOneWithoutOrdersInput!
 }
 
 input OrderCreateManyWithoutProductsInput {
@@ -250,10 +250,21 @@ input OrderCreateManyWithoutProductsInput {
   connect: [OrderWhereUniqueInput!]
 }
 
+input OrderCreateManyWithoutUserInput {
+  create: [OrderCreateWithoutUserInput!]
+  connect: [OrderWhereUniqueInput!]
+}
+
 input OrderCreateWithoutProductsInput {
   id: ID
   status: String!
-  user: UserCreateOneInput!
+  user: UserCreateOneWithoutOrdersInput!
+}
+
+input OrderCreateWithoutUserInput {
+  id: ID
+  status: String!
+  products: ProductOrderCreateManyWithoutOrdersInput
 }
 
 type OrderEdge {
@@ -350,7 +361,7 @@ input OrderSubscriptionWhereInput {
 input OrderUpdateInput {
   status: String
   products: ProductOrderUpdateManyWithoutOrdersInput
-  user: UserUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutOrdersInput
 }
 
 input OrderUpdateManyDataInput {
@@ -373,6 +384,18 @@ input OrderUpdateManyWithoutProductsInput {
   updateMany: [OrderUpdateManyWithWhereNestedInput!]
 }
 
+input OrderUpdateManyWithoutUserInput {
+  create: [OrderCreateWithoutUserInput!]
+  delete: [OrderWhereUniqueInput!]
+  connect: [OrderWhereUniqueInput!]
+  set: [OrderWhereUniqueInput!]
+  disconnect: [OrderWhereUniqueInput!]
+  update: [OrderUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [OrderUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [OrderScalarWhereInput!]
+  updateMany: [OrderUpdateManyWithWhereNestedInput!]
+}
+
 input OrderUpdateManyWithWhereNestedInput {
   where: OrderScalarWhereInput!
   data: OrderUpdateManyDataInput!
@@ -380,7 +403,12 @@ input OrderUpdateManyWithWhereNestedInput {
 
 input OrderUpdateWithoutProductsDataInput {
   status: String
-  user: UserUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutOrdersInput
+}
+
+input OrderUpdateWithoutUserDataInput {
+  status: String
+  products: ProductOrderUpdateManyWithoutOrdersInput
 }
 
 input OrderUpdateWithWhereUniqueWithoutProductsInput {
@@ -388,10 +416,21 @@ input OrderUpdateWithWhereUniqueWithoutProductsInput {
   data: OrderUpdateWithoutProductsDataInput!
 }
 
+input OrderUpdateWithWhereUniqueWithoutUserInput {
+  where: OrderWhereUniqueInput!
+  data: OrderUpdateWithoutUserDataInput!
+}
+
 input OrderUpsertWithWhereUniqueWithoutProductsInput {
   where: OrderWhereUniqueInput!
   update: OrderUpdateWithoutProductsDataInput!
   create: OrderCreateWithoutProductsInput!
+}
+
+input OrderUpsertWithWhereUniqueWithoutUserInput {
+  where: OrderWhereUniqueInput!
+  update: OrderUpdateWithoutUserDataInput!
+  create: OrderCreateWithoutUserInput!
 }
 
 input OrderWhereInput {
@@ -1202,6 +1241,7 @@ type User {
   phone: String!
   address: String!
   password: String!
+  orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -1219,11 +1259,21 @@ input UserCreateInput {
   phone: String!
   address: String!
   password: String!
+  orders: OrderCreateManyWithoutUserInput
 }
 
-input UserCreateOneInput {
-  create: UserCreateInput
+input UserCreateOneWithoutOrdersInput {
+  create: UserCreateWithoutOrdersInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutOrdersInput {
+  id: ID
+  username: String!
+  email: String!
+  phone: String!
+  address: String!
+  password: String!
 }
 
 type UserEdge {
@@ -1279,20 +1329,13 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateDataInput {
-  username: String
-  email: String
-  phone: String
-  address: String
-  password: String
-}
-
 input UserUpdateInput {
   username: String
   email: String
   phone: String
   address: String
   password: String
+  orders: OrderUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -1303,16 +1346,24 @@ input UserUpdateManyMutationInput {
   password: String
 }
 
-input UserUpdateOneRequiredInput {
-  create: UserCreateInput
-  update: UserUpdateDataInput
-  upsert: UserUpsertNestedInput
+input UserUpdateOneRequiredWithoutOrdersInput {
+  create: UserCreateWithoutOrdersInput
+  update: UserUpdateWithoutOrdersDataInput
+  upsert: UserUpsertWithoutOrdersInput
   connect: UserWhereUniqueInput
 }
 
-input UserUpsertNestedInput {
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+input UserUpdateWithoutOrdersDataInput {
+  username: String
+  email: String
+  phone: String
+  address: String
+  password: String
+}
+
+input UserUpsertWithoutOrdersInput {
+  update: UserUpdateWithoutOrdersDataInput!
+  create: UserCreateWithoutOrdersInput!
 }
 
 input UserWhereInput {
@@ -1400,6 +1451,9 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
+  orders_every: OrderWhereInput
+  orders_some: OrderWhereInput
+  orders_none: OrderWhereInput
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]

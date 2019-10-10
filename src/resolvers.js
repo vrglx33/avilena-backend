@@ -30,7 +30,7 @@ const resolvers = {
             return getUser(context);
         },
         getOrderDetails: async (parent, { id }, {context}) => {
-            return await context.prisma.order({ id:id })
+            return await context.prisma.order({ id:id }).products()
         },
         getOrders: async (parent, { user }, {context}) => {
             return await context.prisma.user({ id:user }).orders();
