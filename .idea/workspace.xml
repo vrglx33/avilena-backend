@@ -2,11 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8818c91e-4dd7-480d-ae69-d5ea54295fe3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/datamodel.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/datamodel.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/index.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generated/prisma-schema.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/prisma-schema.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resolvers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/resolvers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/schema.graphql" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,8 +32,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/schema.graphql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="56" column="13" selection-start-line="56" selection-start-column="13" selection-end-line="56" selection-end-column="13" />
+            <state relative-caret-position="324">
+              <caret line="48" column="17" lean-forward="true" selection-start-line="48" selection-start-column="17" selection-end-line="48" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -158,12 +153,12 @@
       <workItem from="1570380828360" duration="2682000" />
       <workItem from="1570498956539" duration="1823000" />
       <workItem from="1570587688565" duration="630000" />
-      <workItem from="1570591050479" duration="8636000" />
+      <workItem from="1570591050479" duration="9322000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="110240000" />
+    <option name="totallyTimeSpent" value="110926000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -411,8 +406,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/schema.graphql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="56" column="13" selection-start-line="56" selection-start-column="13" selection-end-line="56" selection-end-column="13" />
+        <state relative-caret-position="324">
+          <caret line="48" column="17" lean-forward="true" selection-start-line="48" selection-start-column="17" selection-end-line="48" selection-end-column="17" />
         </state>
       </provider>
     </entry>
