@@ -1,6 +1,6 @@
 import {getUser} from "./helpers";
 
-const bcrypt  = require('bcrypt');
+const simplecrypt = require("simplecrypt");
 const jwt = require('jsonwebtoken');
 
 const asyncForeEach = async(array, callback) => {
@@ -40,8 +40,9 @@ const resolvers = {
             if (!user) {
                 throw new Error(`No such user found for email: ${email}`)
             }
-            const valid = await bcrypt.compare(password, password);
-            if (!valid)  {
+            const sc = simplecrypt();
+            const encriptedPassword = sc.encrypt(password);
+            if (encriptedPassword !== user.password)  {
                 throw new Error('Invalid password')
             }
             delete user.password;
@@ -56,8 +57,8 @@ const resolvers = {
         signup: async (parent, { email, username, phone, address }, {context}) => {
             const temporaryPassword = Math.floor(Math.random()*1000 + 1000).toString();
             console.log(temporaryPassword);
-            const password = await bcrypt
-                .hash(temporaryPassword, 10);
+            const sc = simplecrypt();
+            const password = sc.encrypt(temporaryPassword);
             const user = await context.prisma.createUser(
                 {
                     username,
