@@ -36,7 +36,7 @@ const resolvers = {
             return await context.prisma.user({ id:user }).orders();
         },
         login: async (parent, { email,password }, {context}) => {
-            const user = await context.prisma.user({email});
+            const user = await context.prisma.user.findOne({ where:{email}});
             if (!user) {
                 throw new Error(`No such user found for email: ${email}`)
             }
@@ -55,7 +55,7 @@ const resolvers = {
     },
     Mutation: {
         signup: async (parent, { email, username, phone, address }, {context}) => {
-            const usr = await context.prisma.user({email});
+            const usr = await context.prisma.user.findOne({ where:{email}});
             if (!usr) {
                 throw new Error(`Ya existe un usuario con este correo: ${email}`)
             }
