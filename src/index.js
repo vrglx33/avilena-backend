@@ -13,7 +13,7 @@ const server = new GraphQLServer({
       prisma,
     },
   }),
-    playground:true,
+    playground:false,
 });
 
 server.start({ port: 3001 }).then(({url}) => {
