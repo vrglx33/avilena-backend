@@ -55,6 +55,10 @@ const resolvers = {
     },
     Mutation: {
         signup: async (parent, { email, username, phone, address }, {context}) => {
+            const usr = await context.prisma.user({email});
+            if (!usr) {
+                throw new Error(`Ya existe un usuario con este correo: ${email}`)
+            }
             const temporaryPassword = Math.floor(Math.random()*1000 + 1000).toString();
             console.log(temporaryPassword);
             const sc = simplecrypt();
