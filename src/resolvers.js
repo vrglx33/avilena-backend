@@ -36,8 +36,7 @@ const resolvers = {
             return await context.prisma.user({ id:user }).orders();
         },
         login: async (parent, { email,password }, {context}) => {
-            console.log(context);
-            const user = await context.user({email});
+            const user = await context.prisma.user({email});
             if (!user) {
                 throw new Error(`No such user found for email: ${email}`)
             }
