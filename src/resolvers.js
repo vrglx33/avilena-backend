@@ -71,6 +71,7 @@ const resolvers = {
                     address,
                     password: pass,
                 });
+            delete user.password;
             const authorization = await jwt.sign(user, "secret123");
             return { authorization, user }
         },
