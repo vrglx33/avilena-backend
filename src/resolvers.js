@@ -36,14 +36,15 @@ const resolvers = {
             return await context.prisma.user({ id:user }).orders();
         },
         login: async (parent, { email,password }, {context}) => {
-            const user = await context.prisma.user.findOne({ where:{email}});
-            if (!user) {
+            const user = await context.prisma.users({where:{email}});
+            console.log(user);
+            if (!user.length) {
                 throw new Error(`No such user found for email: ${email}`)
             }
             const sc = simplecrypt();
             const encriptedPassword = sc.encrypt(password);
             if (encriptedPassword !== user.password)  {
-                throw new Error('Invalid password')
+                throw new Error('Contraseña Inválida')
             }
             delete user.password;
             const authorization = await jwt.sign(user, "secret123");
@@ -54,22 +55,21 @@ const resolvers = {
         },
     },
     Mutation: {
-        signup: async (parent, { email, username, phone, address }, {context}) => {
-            const usr = await context.prisma.user.findOne({ where:{email}});
-            if (!usr) {
+        signup: async (parent, { email, username, phone, address, password }, {context}) => {
+            const usr = await context.prisma.users({where:{email}});
+            if (usr.length) {
                 throw new Error(`Ya existe un usuario con este correo: ${email}`)
             }
-            const temporaryPassword = Math.floor(Math.random()*1000 + 1000).toString();
-            console.log(temporaryPassword);
+            const temporaryPassword = password || Math.floor(Math.random()*1000 + 1000).toString();
             const sc = simplecrypt();
-            const password = sc.encrypt(temporaryPassword);
+            const pass = sc.encrypt(temporaryPassword);
             const user = await context.prisma.createUser(
                 {
                     username,
                     email,
                     phone,
                     address,
-                    password,
+                    password: pass,
                 });
             const authorization = await jwt.sign(user, "secret123");
             return { authorization, user }

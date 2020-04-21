@@ -19,7 +19,7 @@ type Query {
 }
 
 type Mutation {
-  signup(username:String!, email: String!,phone: String!, address: String!): Token!
+  signup(username:String!, email: String!,phone: String!, address: String!, password:String): Token!
   createOrder(status:String, products:[ProductOrdersInput] ,user:ID!):Order!
 }
 
