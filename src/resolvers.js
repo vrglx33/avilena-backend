@@ -20,6 +20,9 @@ const resolvers = {
                 },
             )
         },
+        getStates:() => {
+
+        },
         getProductType:async (parent, { id }, {context}) => {
             return await context.prisma.productTypes();
         },

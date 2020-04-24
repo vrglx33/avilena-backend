@@ -6,6 +6,8 @@ type User {
     address: String!
     password: String!
     orders:[Order!]! @relation(name:"UserOrder")
+    role: Role @relation(name:"UserRole")
+    city: City @relation(name:"UserCity")
     updatedAt: DateTime! @updatedAt
     createdAt: DateTime! @createdAt
 }
@@ -48,4 +50,23 @@ type Order{
     user: User! @relation(name:"UserOrder")
     updatedAt: DateTime! @updatedAt
     createdAt: DateTime! @createdAt
+}
+
+type Role{
+    id: ID! @id
+    name: String!
+    users: [User!]! @relation(name:"UserRole")
+}
+
+type City {
+    id: ID! @id
+    name: String!
+    users: [User!]! @relation(name:"UserCity")
+    state: State! @relation(name:"CityState")
+}
+
+type State {
+    id: ID! @id
+    name: String!
+    cities: [City!]! @relation(name:"CityState")
 }

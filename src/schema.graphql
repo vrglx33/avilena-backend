@@ -16,6 +16,7 @@ type Query {
     getProductType:[ProductType]
     getOrderDetails(id:ID!): [ProductType]
     getOrders(user:ID!):[Order]
+    getStates:[State!]!
 }
 
 type Mutation {

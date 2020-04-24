@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateNews {
+/* GraphQL */ `type AggregateCity {
+  count: Int!
+}
+
+type AggregateNews {
   count: Int!
 }
 
@@ -23,6 +27,14 @@ type AggregateProductType {
   count: Int!
 }
 
+type AggregateRole {
+  count: Int!
+}
+
+type AggregateState {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -31,11 +43,236 @@ type BatchPayload {
   count: Long!
 }
 
+type City {
+  id: ID!
+  name: String!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  state: State!
+}
+
+type CityConnection {
+  pageInfo: PageInfo!
+  edges: [CityEdge]!
+  aggregate: AggregateCity!
+}
+
+input CityCreateInput {
+  id: ID
+  name: String!
+  users: UserCreateManyWithoutCityInput
+  state: StateCreateOneWithoutCitiesInput!
+}
+
+input CityCreateManyWithoutStateInput {
+  create: [CityCreateWithoutStateInput!]
+  connect: [CityWhereUniqueInput!]
+}
+
+input CityCreateOneWithoutUsersInput {
+  create: CityCreateWithoutUsersInput
+  connect: CityWhereUniqueInput
+}
+
+input CityCreateWithoutStateInput {
+  id: ID
+  name: String!
+  users: UserCreateManyWithoutCityInput
+}
+
+input CityCreateWithoutUsersInput {
+  id: ID
+  name: String!
+  state: StateCreateOneWithoutCitiesInput!
+}
+
+type CityEdge {
+  node: City!
+  cursor: String!
+}
+
+enum CityOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type CityPreviousValues {
+  id: ID!
+  name: String!
+}
+
+input CityScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [CityScalarWhereInput!]
+  OR: [CityScalarWhereInput!]
+  NOT: [CityScalarWhereInput!]
+}
+
+type CitySubscriptionPayload {
+  mutation: MutationType!
+  node: City
+  updatedFields: [String!]
+  previousValues: CityPreviousValues
+}
+
+input CitySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CityWhereInput
+  AND: [CitySubscriptionWhereInput!]
+  OR: [CitySubscriptionWhereInput!]
+  NOT: [CitySubscriptionWhereInput!]
+}
+
+input CityUpdateInput {
+  name: String
+  users: UserUpdateManyWithoutCityInput
+  state: StateUpdateOneRequiredWithoutCitiesInput
+}
+
+input CityUpdateManyDataInput {
+  name: String
+}
+
+input CityUpdateManyMutationInput {
+  name: String
+}
+
+input CityUpdateManyWithoutStateInput {
+  create: [CityCreateWithoutStateInput!]
+  delete: [CityWhereUniqueInput!]
+  connect: [CityWhereUniqueInput!]
+  set: [CityWhereUniqueInput!]
+  disconnect: [CityWhereUniqueInput!]
+  update: [CityUpdateWithWhereUniqueWithoutStateInput!]
+  upsert: [CityUpsertWithWhereUniqueWithoutStateInput!]
+  deleteMany: [CityScalarWhereInput!]
+  updateMany: [CityUpdateManyWithWhereNestedInput!]
+}
+
+input CityUpdateManyWithWhereNestedInput {
+  where: CityScalarWhereInput!
+  data: CityUpdateManyDataInput!
+}
+
+input CityUpdateOneWithoutUsersInput {
+  create: CityCreateWithoutUsersInput
+  update: CityUpdateWithoutUsersDataInput
+  upsert: CityUpsertWithoutUsersInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: CityWhereUniqueInput
+}
+
+input CityUpdateWithoutStateDataInput {
+  name: String
+  users: UserUpdateManyWithoutCityInput
+}
+
+input CityUpdateWithoutUsersDataInput {
+  name: String
+  state: StateUpdateOneRequiredWithoutCitiesInput
+}
+
+input CityUpdateWithWhereUniqueWithoutStateInput {
+  where: CityWhereUniqueInput!
+  data: CityUpdateWithoutStateDataInput!
+}
+
+input CityUpsertWithoutUsersInput {
+  update: CityUpdateWithoutUsersDataInput!
+  create: CityCreateWithoutUsersInput!
+}
+
+input CityUpsertWithWhereUniqueWithoutStateInput {
+  where: CityWhereUniqueInput!
+  update: CityUpdateWithoutStateDataInput!
+  create: CityCreateWithoutStateInput!
+}
+
+input CityWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+  state: StateWhereInput
+  AND: [CityWhereInput!]
+  OR: [CityWhereInput!]
+  NOT: [CityWhereInput!]
+}
+
+input CityWhereUniqueInput {
+  id: ID
+}
+
 scalar DateTime
 
 scalar Long
 
 type Mutation {
+  createCity(data: CityCreateInput!): City!
+  updateCity(data: CityUpdateInput!, where: CityWhereUniqueInput!): City
+  updateManyCities(data: CityUpdateManyMutationInput!, where: CityWhereInput): BatchPayload!
+  upsertCity(where: CityWhereUniqueInput!, create: CityCreateInput!, update: CityUpdateInput!): City!
+  deleteCity(where: CityWhereUniqueInput!): City
+  deleteManyCities(where: CityWhereInput): BatchPayload!
   createNews(data: NewsCreateInput!): News!
   updateNews(data: NewsUpdateInput!, where: NewsWhereUniqueInput!): News
   updateManyNewses(data: NewsUpdateManyMutationInput!, where: NewsWhereInput): BatchPayload!
@@ -66,6 +303,18 @@ type Mutation {
   upsertProductType(where: ProductTypeWhereUniqueInput!, create: ProductTypeCreateInput!, update: ProductTypeUpdateInput!): ProductType!
   deleteProductType(where: ProductTypeWhereUniqueInput!): ProductType
   deleteManyProductTypes(where: ProductTypeWhereInput): BatchPayload!
+  createRole(data: RoleCreateInput!): Role!
+  updateRole(data: RoleUpdateInput!, where: RoleWhereUniqueInput!): Role
+  updateManyRoles(data: RoleUpdateManyMutationInput!, where: RoleWhereInput): BatchPayload!
+  upsertRole(where: RoleWhereUniqueInput!, create: RoleCreateInput!, update: RoleUpdateInput!): Role!
+  deleteRole(where: RoleWhereUniqueInput!): Role
+  deleteManyRoles(where: RoleWhereInput): BatchPayload!
+  createState(data: StateCreateInput!): State!
+  updateState(data: StateUpdateInput!, where: StateWhereUniqueInput!): State
+  updateManyStates(data: StateUpdateManyMutationInput!, where: StateWhereInput): BatchPayload!
+  upsertState(where: StateWhereUniqueInput!, create: StateCreateInput!, update: StateUpdateInput!): State!
+  deleteState(where: StateWhereUniqueInput!): State
+  deleteManyStates(where: StateWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -1204,6 +1453,9 @@ input ProductWhereUniqueInput {
 }
 
 type Query {
+  city(where: CityWhereUniqueInput!): City
+  cities(where: CityWhereInput, orderBy: CityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [City]!
+  citiesConnection(where: CityWhereInput, orderBy: CityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CityConnection!
   news(where: NewsWhereUniqueInput!): News
   newses(where: NewsWhereInput, orderBy: NewsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [News]!
   newsesConnection(where: NewsWhereInput, orderBy: NewsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): NewsConnection!
@@ -1219,18 +1471,287 @@ type Query {
   productType(where: ProductTypeWhereUniqueInput!): ProductType
   productTypes(where: ProductTypeWhereInput, orderBy: ProductTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProductType]!
   productTypesConnection(where: ProductTypeWhereInput, orderBy: ProductTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductTypeConnection!
+  role(where: RoleWhereUniqueInput!): Role
+  roles(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Role]!
+  rolesConnection(where: RoleWhereInput, orderBy: RoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoleConnection!
+  state(where: StateWhereUniqueInput!): State
+  states(where: StateWhereInput, orderBy: StateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [State]!
+  statesConnection(where: StateWhereInput, orderBy: StateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StateConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   node(id: ID!): Node
 }
 
+type Role {
+  id: ID!
+  name: String!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+}
+
+type RoleConnection {
+  pageInfo: PageInfo!
+  edges: [RoleEdge]!
+  aggregate: AggregateRole!
+}
+
+input RoleCreateInput {
+  id: ID
+  name: String!
+  users: UserCreateManyWithoutRoleInput
+}
+
+input RoleCreateOneWithoutUsersInput {
+  create: RoleCreateWithoutUsersInput
+  connect: RoleWhereUniqueInput
+}
+
+input RoleCreateWithoutUsersInput {
+  id: ID
+  name: String!
+}
+
+type RoleEdge {
+  node: Role!
+  cursor: String!
+}
+
+enum RoleOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type RolePreviousValues {
+  id: ID!
+  name: String!
+}
+
+type RoleSubscriptionPayload {
+  mutation: MutationType!
+  node: Role
+  updatedFields: [String!]
+  previousValues: RolePreviousValues
+}
+
+input RoleSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: RoleWhereInput
+  AND: [RoleSubscriptionWhereInput!]
+  OR: [RoleSubscriptionWhereInput!]
+  NOT: [RoleSubscriptionWhereInput!]
+}
+
+input RoleUpdateInput {
+  name: String
+  users: UserUpdateManyWithoutRoleInput
+}
+
+input RoleUpdateManyMutationInput {
+  name: String
+}
+
+input RoleUpdateOneWithoutUsersInput {
+  create: RoleCreateWithoutUsersInput
+  update: RoleUpdateWithoutUsersDataInput
+  upsert: RoleUpsertWithoutUsersInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: RoleWhereUniqueInput
+}
+
+input RoleUpdateWithoutUsersDataInput {
+  name: String
+}
+
+input RoleUpsertWithoutUsersInput {
+  update: RoleUpdateWithoutUsersDataInput!
+  create: RoleCreateWithoutUsersInput!
+}
+
+input RoleWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  users_every: UserWhereInput
+  users_some: UserWhereInput
+  users_none: UserWhereInput
+  AND: [RoleWhereInput!]
+  OR: [RoleWhereInput!]
+  NOT: [RoleWhereInput!]
+}
+
+input RoleWhereUniqueInput {
+  id: ID
+}
+
+type State {
+  id: ID!
+  name: String!
+  cities(where: CityWhereInput, orderBy: CityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [City!]
+}
+
+type StateConnection {
+  pageInfo: PageInfo!
+  edges: [StateEdge]!
+  aggregate: AggregateState!
+}
+
+input StateCreateInput {
+  id: ID
+  name: String!
+  cities: CityCreateManyWithoutStateInput
+}
+
+input StateCreateOneWithoutCitiesInput {
+  create: StateCreateWithoutCitiesInput
+  connect: StateWhereUniqueInput
+}
+
+input StateCreateWithoutCitiesInput {
+  id: ID
+  name: String!
+}
+
+type StateEdge {
+  node: State!
+  cursor: String!
+}
+
+enum StateOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type StatePreviousValues {
+  id: ID!
+  name: String!
+}
+
+type StateSubscriptionPayload {
+  mutation: MutationType!
+  node: State
+  updatedFields: [String!]
+  previousValues: StatePreviousValues
+}
+
+input StateSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: StateWhereInput
+  AND: [StateSubscriptionWhereInput!]
+  OR: [StateSubscriptionWhereInput!]
+  NOT: [StateSubscriptionWhereInput!]
+}
+
+input StateUpdateInput {
+  name: String
+  cities: CityUpdateManyWithoutStateInput
+}
+
+input StateUpdateManyMutationInput {
+  name: String
+}
+
+input StateUpdateOneRequiredWithoutCitiesInput {
+  create: StateCreateWithoutCitiesInput
+  update: StateUpdateWithoutCitiesDataInput
+  upsert: StateUpsertWithoutCitiesInput
+  connect: StateWhereUniqueInput
+}
+
+input StateUpdateWithoutCitiesDataInput {
+  name: String
+}
+
+input StateUpsertWithoutCitiesInput {
+  update: StateUpdateWithoutCitiesDataInput!
+  create: StateCreateWithoutCitiesInput!
+}
+
+input StateWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  cities_every: CityWhereInput
+  cities_some: CityWhereInput
+  cities_none: CityWhereInput
+  AND: [StateWhereInput!]
+  OR: [StateWhereInput!]
+  NOT: [StateWhereInput!]
+}
+
+input StateWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
+  city(where: CitySubscriptionWhereInput): CitySubscriptionPayload
   news(where: NewsSubscriptionWhereInput): NewsSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
   productOrder(where: ProductOrderSubscriptionWhereInput): ProductOrderSubscriptionPayload
   productType(where: ProductTypeSubscriptionWhereInput): ProductTypeSubscriptionPayload
+  role(where: RoleSubscriptionWhereInput): RoleSubscriptionPayload
+  state(where: StateSubscriptionWhereInput): StateSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -1242,6 +1763,8 @@ type User {
   address: String!
   password: String!
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
+  role: Role
+  city: City
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -1260,11 +1783,34 @@ input UserCreateInput {
   address: String!
   password: String!
   orders: OrderCreateManyWithoutUserInput
+  role: RoleCreateOneWithoutUsersInput
+  city: CityCreateOneWithoutUsersInput
+}
+
+input UserCreateManyWithoutCityInput {
+  create: [UserCreateWithoutCityInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutRoleInput {
+  create: [UserCreateWithoutRoleInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateOneWithoutOrdersInput {
   create: UserCreateWithoutOrdersInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutCityInput {
+  id: ID
+  username: String!
+  email: String!
+  phone: String!
+  address: String!
+  password: String!
+  orders: OrderCreateManyWithoutUserInput
+  role: RoleCreateOneWithoutUsersInput
 }
 
 input UserCreateWithoutOrdersInput {
@@ -1274,6 +1820,19 @@ input UserCreateWithoutOrdersInput {
   phone: String!
   address: String!
   password: String!
+  role: RoleCreateOneWithoutUsersInput
+  city: CityCreateOneWithoutUsersInput
+}
+
+input UserCreateWithoutRoleInput {
+  id: ID
+  username: String!
+  email: String!
+  phone: String!
+  address: String!
+  password: String!
+  orders: OrderCreateManyWithoutUserInput
+  city: CityCreateOneWithoutUsersInput
 }
 
 type UserEdge {
@@ -1311,6 +1870,112 @@ type UserPreviousValues {
   createdAt: DateTime!
 }
 
+input UserScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  username: String
+  username_not: String
+  username_in: [String!]
+  username_not_in: [String!]
+  username_lt: String
+  username_lte: String
+  username_gt: String
+  username_gte: String
+  username_contains: String
+  username_not_contains: String
+  username_starts_with: String
+  username_not_starts_with: String
+  username_ends_with: String
+  username_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [UserScalarWhereInput!]
+  OR: [UserScalarWhereInput!]
+  NOT: [UserScalarWhereInput!]
+}
+
 type UserSubscriptionPayload {
   mutation: MutationType!
   node: User
@@ -1336,6 +2001,16 @@ input UserUpdateInput {
   address: String
   password: String
   orders: OrderUpdateManyWithoutUserInput
+  role: RoleUpdateOneWithoutUsersInput
+  city: CityUpdateOneWithoutUsersInput
+}
+
+input UserUpdateManyDataInput {
+  username: String
+  email: String
+  phone: String
+  address: String
+  password: String
 }
 
 input UserUpdateManyMutationInput {
@@ -1346,11 +2021,50 @@ input UserUpdateManyMutationInput {
   password: String
 }
 
+input UserUpdateManyWithoutCityInput {
+  create: [UserCreateWithoutCityInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutCityInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutCityInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithoutRoleInput {
+  create: [UserCreateWithoutRoleInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutRoleInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutRoleInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
 input UserUpdateOneRequiredWithoutOrdersInput {
   create: UserCreateWithoutOrdersInput
   update: UserUpdateWithoutOrdersDataInput
   upsert: UserUpsertWithoutOrdersInput
   connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutCityDataInput {
+  username: String
+  email: String
+  phone: String
+  address: String
+  password: String
+  orders: OrderUpdateManyWithoutUserInput
+  role: RoleUpdateOneWithoutUsersInput
 }
 
 input UserUpdateWithoutOrdersDataInput {
@@ -1359,11 +2073,45 @@ input UserUpdateWithoutOrdersDataInput {
   phone: String
   address: String
   password: String
+  role: RoleUpdateOneWithoutUsersInput
+  city: CityUpdateOneWithoutUsersInput
+}
+
+input UserUpdateWithoutRoleDataInput {
+  username: String
+  email: String
+  phone: String
+  address: String
+  password: String
+  orders: OrderUpdateManyWithoutUserInput
+  city: CityUpdateOneWithoutUsersInput
+}
+
+input UserUpdateWithWhereUniqueWithoutCityInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutCityDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutRoleInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutRoleDataInput!
 }
 
 input UserUpsertWithoutOrdersInput {
   update: UserUpdateWithoutOrdersDataInput!
   create: UserCreateWithoutOrdersInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutCityInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutCityDataInput!
+  create: UserCreateWithoutCityInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutRoleInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutRoleDataInput!
+  create: UserCreateWithoutRoleInput!
 }
 
 input UserWhereInput {
@@ -1454,6 +2202,8 @@ input UserWhereInput {
   orders_every: OrderWhereInput
   orders_some: OrderWhereInput
   orders_none: OrderWhereInput
+  role: RoleWhereInput
+  city: CityWhereInput
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
