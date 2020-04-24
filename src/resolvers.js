@@ -20,8 +20,11 @@ const resolvers = {
                 },
             )
         },
-        getStates:() => {
-
+        getStates:async (parent, args, {context}) => {
+            return await context.prisma.states();
+        },
+        getCities:async (parent, {id}, {context}) => {
+            return await context.prisma.cities({where:{state:{id}}});
         },
         getProductType:async (parent, { id }, {context}) => {
             return await context.prisma.productTypes();
