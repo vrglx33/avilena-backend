@@ -3,6 +3,8 @@ import {getUser} from "./helpers";
 const simplecrypt = require("simplecrypt");
 const jwt = require('jsonwebtoken');
 
+const sc = simplecrypt();
+
 const asyncForeEach = async(array, callback) => {
     for (let index = 0; index < (array.length > 7 ? 7:array.length); index++) {
         await callback(array[index], index, array);
@@ -43,31 +45,29 @@ const resolvers = {
         },
         login: async (parent, { email,password }, {context}) => {
             const user = await context.prisma.users({where:{email}});
-            console.log(user);
-            if (!user.length) {
+            if (!user[0]) {
                 throw new Error(`No such user found for email: ${email}`)
             }
-            const sc = simplecrypt();
             const encriptedPassword = sc.encrypt(password);
-            if (encriptedPassword !== user.password)  {
+            if (encriptedPassword !== user[0].password)  {
                 throw new Error('Contraseña Inválida')
             }
-            delete user.password;
-            const authorization = await jwt.sign(user, "secret123");
+            delete user[0].password;
+            const authorization = await jwt.sign(user[0], "secret123");
             return {
                 authorization,
-                user,
+                user:user[0],
             }
         },
     },
     Mutation: {
-        signup: async (parent, { email, username, phone, address, password }, {context}) => {
+        signup: async (parent, { email, username, phone, address, password, city }, {context}) => {
             const usr = await context.prisma.users({where:{email}});
             if (usr.length) {
                 throw new Error(`Ya existe un usuario con este correo: ${email}`)
             }
             const temporaryPassword = password || Math.floor(Math.random()*1000 + 1000).toString();
-            const sc = simplecrypt();
+            console.log(temporaryPassword);
             const pass = sc.encrypt(temporaryPassword);
             const user = await context.prisma.createUser(
                 {
@@ -76,6 +76,11 @@ const resolvers = {
                     phone,
                     address,
                     password: pass,
+                    city: {
+                        connect:{
+                            id: city
+                        }
+                    }
                 });
             delete user.password;
             const authorization = await jwt.sign(user, "secret123");
