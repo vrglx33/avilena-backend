@@ -43,6 +43,9 @@ const resolvers = {
         getOrders: async (parent, { user }, {context}) => {
             return await context.prisma.user({ id:user }).orders();
         },
+        getAllOrders: async (parent, { user }, {context}) => {
+            return await context.prisma.orders();
+        },
         login: async (parent, { email,password }, {context}) => {
             const user = await context.prisma.users({where:{email}});
             if (!user[0]) {
@@ -67,7 +70,6 @@ const resolvers = {
                 throw new Error(`Ya existe un usuario con este correo: ${email}`)
             }
             const temporaryPassword = password || Math.floor(Math.random()*1000 + 1000).toString();
-            console.log(temporaryPassword);
             const pass = sc.encrypt(temporaryPassword);
             const user = await context.prisma.createUser(
                 {
