@@ -11,6 +11,9 @@ const asyncForeEach = async(array, callback) => {
     }
 };
 
+const hashCode = s => s.split('').reduce((a,b) => (((a << 5) - a) + b.charCodeAt(0))|0, 0);
+
+
 const resolvers = {
     Query: {
         getUser: (parent, { id }, {context}) => {
@@ -51,7 +54,7 @@ const resolvers = {
             if (!user[0]) {
                 throw new Error(`No such user found for email: ${email}`)
             }
-            const encriptedPassword = sc.encrypt(password);
+            const encriptedPassword = String(hashCode(password));
             if (encriptedPassword !== user[0].password)  {
                 throw new Error('Contraseña Inválida')
             }
@@ -70,7 +73,7 @@ const resolvers = {
                 throw new Error(`Ya existe un usuario con este correo: ${email}`)
             }
             const temporaryPassword = password || Math.floor(Math.random()*1000 + 1000).toString();
-            const pass = sc.encrypt(temporaryPassword);
+            const pass = String(hashCode(temporaryPassword));
             const user = await context.prisma.createUser(
                 {
                     username,
