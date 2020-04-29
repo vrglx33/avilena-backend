@@ -8,6 +8,11 @@ type Result {
     createdAt:String!
 }
 
+type Role {
+    id: ID!
+    name: String!
+}
+
 type Query {
     getUser(id: ID!): User
     getCategoryProducts(id: ID!): [Product]
@@ -17,6 +22,7 @@ type Query {
     getOrderDetails(id:ID!): [ProductType]
     getOrders(user:ID!):[Order]
     getAllOrders:[Order]
+    getAllUsers:[User]
     getAllPendingOrders:[Order]
     getAllDeliveredOrders:[Order]
     getAllOnWayOrders:[Order]
@@ -47,6 +53,7 @@ type User {
     password: String!
     Orders:[Order!]!
     city: City
+    role: Role
     updatedAt: String!
     createdAt: String!
 }
