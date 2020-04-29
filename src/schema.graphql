@@ -17,6 +17,9 @@ type Query {
     getOrderDetails(id:ID!): [ProductType]
     getOrders(user:ID!):[Order]
     getAllOrders:[Order]
+    getAllPendingOrders:[Order]
+    getAllDeliveredOrders:[Order]
+    getAllOnWayOrders:[Order]
     getStates:[State!]!
     getCities(id:ID!):[City!]!
 }
@@ -43,6 +46,7 @@ type User {
     address: String!
     password: String!
     Orders:[Order!]!
+    city: City
     updatedAt: String!
     createdAt: String!
 }
