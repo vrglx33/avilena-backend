@@ -48,6 +48,9 @@ const resolvers = {
         getAllOrders: async (parent, {user}, {context}) => {
             return await context.prisma.orders();
         },
+        getNews: async (parent, {user}, {context}) => {
+            return await context.prisma.newses();
+        },
         getAllUsers: async (parent, {user}, {context}) => {
             return await context.prisma.users();
         },

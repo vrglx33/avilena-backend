@@ -27,6 +27,7 @@ type Query {
     getAllDeliveredOrders:[Order]
     getAllOnWayOrders:[Order]
     getStates:[State!]!
+    getNews:[News!]!
     getCities(id:ID!):[City!]!
 }
 
@@ -75,9 +76,9 @@ type ProductType{
 
 type News{
     id: ID!
-    title:String!
-    text:String!
-    image:String!
+    title:String
+    text:String
+    image:String
 }
 
 type ProductOrder{
